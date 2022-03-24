@@ -17,7 +17,7 @@ public class TrainRepository {
         return Optional.of(this.trains.get(uid));
     }
 
-    public List<TrainEntity> findByOnRepair(Boolean onRepair) {
+    public List<TrainEntity> findAllByOnRepair(Boolean onRepair) {
         return this.trains.values().stream()
                 .filter(x -> onRepair.equals(x.getOnRepair()))
                 .collect(Collectors.toList());
