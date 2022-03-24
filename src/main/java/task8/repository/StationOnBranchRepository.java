@@ -9,6 +9,22 @@ public class StationOnBranchRepository {
 
     private final Map<UUID, StationOnBranchEntity> stationOnBranchEntityMap = new HashMap<>();
 
+    public void insert(StationOnBranchEntity stationOnBranchEntity) {
+        this.stationOnBranchEntityMap.put(stationOnBranchEntity.getUid(), stationOnBranchEntity);
+    }
+
+    public int update(StationOnBranchEntity stationOnBranchEntity) {
+        if (this.stationOnBranchEntityMap.containsKey(stationOnBranchEntity.getUid())) {
+            this.stationOnBranchEntityMap.put(stationOnBranchEntity.getUid(), stationOnBranchEntity);
+            return 1;
+        }
+        return 0;
+    }
+
+    public StationOnBranchEntity delete(UUID stationOnBranchUID) {
+        return this.stationOnBranchEntityMap.remove(stationOnBranchUID);
+    }
+
     public Optional<StationOnBranchEntity> findById(UUID uid) {
         return Optional.of(this.stationOnBranchEntityMap.get(uid));
     }

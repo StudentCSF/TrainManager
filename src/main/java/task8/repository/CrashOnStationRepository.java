@@ -9,6 +9,22 @@ public class CrashOnStationRepository {
 
     private final Map<UUID, CrashOnStationEntity> crashOnStationEntityMap = new HashMap<>();
 
+    public void insert(CrashOnStationEntity crashOnStationEntity) {
+        this.crashOnStationEntityMap.put(crashOnStationEntity.getUid(), crashOnStationEntity);
+    }
+
+    public int update(CrashOnStationEntity crashOnStationEntity) {
+        if (this.crashOnStationEntityMap.containsKey(crashOnStationEntity.getUid())) {
+            this.crashOnStationEntityMap.put(crashOnStationEntity.getUid(), crashOnStationEntity);
+            return 1;
+        }
+        return 0;
+    }
+
+    public CrashOnStationEntity delete(UUID crashOnStationUID) {
+        return this.crashOnStationEntityMap.remove(crashOnStationUID);
+    }
+
     public Optional<CrashOnStationEntity> findById(UUID uid) {
         return Optional.of(this.crashOnStationEntityMap.get(uid));
     }

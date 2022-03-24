@@ -9,6 +9,22 @@ public class CrashRepository {
 
     private final Map<UUID, CrashEntity> crashes = new HashMap<>();
 
+    public void insert(CrashEntity crash) {
+        this.crashes.put(crash.getUid(), crash);
+    }
+
+    public int update(CrashEntity crash) {
+        if (this.crashes.containsKey(crash.getUid())) {
+            this.crashes.put(crash.getUid(), crash);
+            return 1;
+        }
+        return 0;
+    }
+
+    public CrashEntity delete(UUID uid) {
+        return this.crashes.remove(uid);
+    }
+
     public List<CrashEntity> findAll() {
         return new ArrayList<>(this.crashes.values());
     }
