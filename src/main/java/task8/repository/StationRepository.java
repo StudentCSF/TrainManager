@@ -1,6 +1,5 @@
 package task8.repository;
 
-import task8.model.entity.BranchEntity;
 import task8.model.entity.StationEntity;
 
 import java.util.*;
@@ -26,7 +25,7 @@ public class StationRepository {
     }
 
     public Optional<StationEntity> findById(UUID uid) {
-        return Optional.of(this.stations.get(uid));
+        return Optional.ofNullable(this.stations.get(uid));
     }
 
     public List<StationEntity> findAll() {

@@ -1,6 +1,5 @@
 package task8.repository;
 
-import task8.model.entity.BranchEntity;
 import task8.model.entity.TrainOnBranchEntity;
 
 import java.util.*;
@@ -27,7 +26,7 @@ public class TrainOnBranchRepository {
     }
 
     public Optional<TrainOnBranchEntity> findById(UUID uid) {
-        return Optional.of(this.trainOnBranchEntityMap.get(uid));
+        return Optional.ofNullable(this.trainOnBranchEntityMap.get(uid));
     }
 
     public List<TrainOnBranchEntity> findAll() {
@@ -40,15 +39,9 @@ public class TrainOnBranchRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<TrainOnBranchEntity> findAllByStationId(UUID stationUID) {
+    public List<TrainOnBranchEntity> findAllByStationOnBranchId(UUID stationUID) {
         return this.trainOnBranchEntityMap.values().stream()
-                .filter(x -> stationUID.equals(x.getStUID()))
-                .collect(Collectors.toList());
-    }
-
-    public List<TrainOnBranchEntity> findAllByBranchId(UUID branchUID) {
-        return this.trainOnBranchEntityMap.values().stream()
-                .filter(x -> branchUID.equals(x.getBrUID()))
+                .filter(x -> stationUID.equals(x.getStOnBrUID()))
                 .collect(Collectors.toList());
     }
 }

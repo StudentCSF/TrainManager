@@ -9,8 +9,7 @@ import java.util.UUID;
 public class TrainOnBranchEntity {
     private UUID uid;
     private UUID trUID;
-    private UUID stUID;
-    private UUID brUID;
+    private UUID stOnBrUID;
     private LocalDateTime datetime;
     private Boolean forward;
 }

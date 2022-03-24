@@ -25,7 +25,7 @@ public class BranchRepository {
     }
 
     public Optional<BranchEntity> findById(UUID uid) {
-        return Optional.of(this.branches.get(uid));
+        return Optional.ofNullable(this.branches.get(uid));
     }
 
     public List<BranchEntity> findAll() {

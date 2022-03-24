@@ -26,7 +26,7 @@ public class StationOnBranchRepository {
     }
 
     public Optional<StationOnBranchEntity> findById(UUID uid) {
-        return Optional.of(this.stationOnBranchEntityMap.get(uid));
+        return Optional.ofNullable(this.stationOnBranchEntityMap.get(uid));
     }
 
     public List<StationOnBranchEntity> findAll() {

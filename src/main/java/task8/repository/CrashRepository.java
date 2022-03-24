@@ -30,7 +30,7 @@ public class CrashRepository {
     }
 
     public Optional<CrashEntity> findById(UUID uid) {
-        return Optional.of(crashes.get(uid));
+        return Optional.ofNullable(crashes.get(uid));
     }
 
     public List<CrashEntity> findAllByDifficulty(Integer difficulty) {

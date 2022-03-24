@@ -1,6 +1,5 @@
 package task8.repository;
 
-import task8.model.entity.BranchEntity;
 import task8.model.entity.TrainEntity;
 
 import java.util.*;
@@ -31,7 +30,7 @@ public class TrainRepository {
     }
 
     public Optional<TrainEntity> findById(UUID uid) {
-        return Optional.of(this.trains.get(uid));
+        return Optional.ofNullable(this.trains.get(uid));
     }
 
     public List<TrainEntity> findAllByOnRepair(Boolean onRepair) {

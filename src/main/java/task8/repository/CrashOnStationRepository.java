@@ -26,7 +26,7 @@ public class CrashOnStationRepository {
     }
 
     public Optional<CrashOnStationEntity> findById(UUID uid) {
-        return Optional.of(this.crashOnStationEntityMap.get(uid));
+        return Optional.ofNullable(this.crashOnStationEntityMap.get(uid));
     }
 
     public List<CrashOnStationEntity> findAll() {
