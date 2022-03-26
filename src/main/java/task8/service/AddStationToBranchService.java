@@ -9,6 +9,7 @@ import task8.model.entity.StationEntity;
 import task8.model.entity.StationOnBranchEntity;
 import task8.model.input.AddStationToBranchRequest;
 import task8.repository.BranchRepository;
+import task8.repository.StationOnBranchRepository;
 import task8.repository.StationRepository;
 
 import java.util.UUID;
@@ -20,6 +21,8 @@ public class AddStationToBranchService {
     private final StationRepository stationRepository = new StationRepository();
 
     private final BranchRepository branchRepository = new BranchRepository();
+
+    private final StationOnBranchRepository stationOnBranchRepository = new StationOnBranchRepository();
 
     public void processRequest(AddStationToBranchRequest request) {
         if (stationOnBranchValidationComponent.isValid(request)) {
@@ -34,5 +37,7 @@ public class AddStationToBranchService {
         stationOnBranch.setBrUID(branch.getUid());
         stationOnBranch.setStUID(station.getUid());
         stationOnBranch.setPosition(request.getPosition());
+
+        stationOnBranchRepository.insert(stationOnBranch);
     }
 }
