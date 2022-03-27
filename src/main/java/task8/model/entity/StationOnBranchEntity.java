@@ -7,7 +7,7 @@ import java.util.UUID;
 @Data
 public class StationOnBranchEntity {
     private UUID uid;
-    private UUID stUID;
-    private UUID brUID;
+    private UUID stUid;
+    private UUID brUid;
     private Integer position;
 }

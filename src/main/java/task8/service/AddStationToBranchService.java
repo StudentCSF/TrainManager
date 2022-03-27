@@ -25,17 +25,19 @@ public class AddStationToBranchService {
     private final StationOnBranchRepository stationOnBranchRepository = new StationOnBranchRepository();
 
     public void processRequest(AddStationToBranchRequest request) {
-        if (stationOnBranchValidationComponent.isValid(request)) {
+        if (!stationOnBranchValidationComponent.isValid(request)) {
             throw new RequestNotValidException();
         }
 
-        StationEntity station = stationRepository.findByName(request.getStationName()).orElseThrow(StationNotFoundException::new);
-        BranchEntity branch = branchRepository.findByName(request.getBranchName()).orElseThrow(BranchNotFoundException::new);
+        StationEntity station = stationRepository.findByName(request.getStationName())
+                .orElseThrow(StationNotFoundException::new);
+        BranchEntity branch = branchRepository.findByName(request.getBranchName())
+                .orElseThrow(BranchNotFoundException::new);
 
         StationOnBranchEntity stationOnBranch = new StationOnBranchEntity();
         stationOnBranch.setUid(UUID.randomUUID());
-        stationOnBranch.setBrUID(branch.getUid());
-        stationOnBranch.setStUID(station.getUid());
+        stationOnBranch.setBrUid(branch.getUid());
+        stationOnBranch.setStUid(station.getUid());
         stationOnBranch.setPosition(request.getPosition());
 
         stationOnBranchRepository.insert(stationOnBranch);

@@ -35,13 +35,13 @@ public class CrashOnStationRepository {
 
     public List<CrashOnStationEntity> findAllByCrashId(UUID crashUID) {
         return this.crashOnStationEntityMap.values().stream()
-                .filter(x -> crashUID.equals(x.getCrUID()))
+                .filter(x -> crashUID.equals(x.getCrUid()))
                 .collect(Collectors.toList());
     }
 
     public Optional<CrashOnStationEntity> findByStationId(UUID stationUID) {
         return this.crashOnStationEntityMap.values().stream()
-                .filter(x -> stationUID.equals(x.getStUID()))
+                .filter(x -> stationUID.equals(x.getStUid()))
                 .findFirst();
     }
 }

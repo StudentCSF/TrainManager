@@ -35,13 +35,25 @@ public class StationOnBranchRepository {
 
     public List<StationOnBranchEntity> findAllByStationId(UUID stationUID) {
         return this.stationOnBranchEntityMap.values().stream()
-                .filter(x -> stationUID.equals(x.getStUID()))
+                .filter(x -> stationUID.equals(x.getStUid()))
                 .collect(Collectors.toList());
     }
 
     public List<StationOnBranchEntity> findAllByBranchId(UUID branchUID) {
         return this.stationOnBranchEntityMap.values().stream()
-                .filter(x -> branchUID.equals(x.getBrUID()))
+                .filter(x -> branchUID.equals(x.getBrUid()))
                 .collect(Collectors.toList());
+    }
+
+    public Optional<StationOnBranchEntity> findByStationIdAndBranchId(UUID stationUid, UUID branchUid) {
+        return this.stationOnBranchEntityMap.values().stream()
+                .filter(x -> stationUid.equals(x.getStUid()) && branchUid.equals(x.getBrUid()))
+                .findFirst();
+    }
+
+    public Optional<StationOnBranchEntity> findByBranchUidAndPosition(UUID branchUid, int position) {
+        return this.stationOnBranchEntityMap.values().stream()
+                .filter(x -> branchUid.equals(x.getBrUid()) && position == x.getPosition())
+                .findFirst();
     }
 }

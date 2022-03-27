@@ -10,12 +10,12 @@ public class TrainOnBranchRepository {
     Map<UUID, TrainOnBranchEntity> trainOnBranchEntityMap = new HashMap<>();
 
     public void insert(TrainOnBranchEntity trainOnBranchEntity) {
-        this.trainOnBranchEntityMap.put(trainOnBranchEntity.getUid(), trainOnBranchEntity);
+        this.trainOnBranchEntityMap.put(trainOnBranchEntity.getTrUid(), trainOnBranchEntity);
     }
 
     public int update(TrainOnBranchEntity trainOnBranchEntity) {
-        if (this.trainOnBranchEntityMap.containsKey(trainOnBranchEntity.getUid())) {
-            this.trainOnBranchEntityMap.put(trainOnBranchEntity.getUid(), trainOnBranchEntity);
+        if (this.trainOnBranchEntityMap.containsKey(trainOnBranchEntity.getTrUid())) {
+            this.trainOnBranchEntityMap.put(trainOnBranchEntity.getTrUid(), trainOnBranchEntity);
             return 1;
         }
         return 0;
@@ -25,23 +25,17 @@ public class TrainOnBranchRepository {
         return this.trainOnBranchEntityMap.remove(trainOnBranchUID);
     }
 
-    public Optional<TrainOnBranchEntity> findById(UUID uid) {
-        return Optional.ofNullable(this.trainOnBranchEntityMap.get(uid));
-    }
-
     public List<TrainOnBranchEntity> findAll() {
         return new ArrayList<>(this.trainOnBranchEntityMap.values());
     }
 
-    public List<TrainOnBranchEntity> findAllByTrainId(UUID trainUID) {
-        return this.trainOnBranchEntityMap.values().stream()
-                .filter(x -> trainUID.equals(x.getTrUID()))
-                .collect(Collectors.toList());
+    public Optional<TrainOnBranchEntity> findByTrainId(UUID trainUID) {
+        return Optional.ofNullable(this.trainOnBranchEntityMap.get(trainUID));
     }
 
     public List<TrainOnBranchEntity> findAllByStationOnBranchId(UUID stationUID) {
         return this.trainOnBranchEntityMap.values().stream()
-                .filter(x -> stationUID.equals(x.getStOnBrUID()))
+                .filter(x -> stationUID.equals(x.getStOnBrUid()))
                 .collect(Collectors.toList());
     }
 }

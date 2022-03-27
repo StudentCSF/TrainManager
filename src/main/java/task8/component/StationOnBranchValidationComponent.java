@@ -14,8 +14,6 @@ public class StationOnBranchValidationComponent {
 
     private final Validator validator = factory.getValidator();
 
-    private final CrashRepository crashRepository = new CrashRepository();
-
     public boolean isValid(AddStationToBranchRequest addStationToBranchRequest) {
         Set<ConstraintViolation<AddStationToBranchRequest>> errors = validator.validate(addStationToBranchRequest);
         return errors.isEmpty();

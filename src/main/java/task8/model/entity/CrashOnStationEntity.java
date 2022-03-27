@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 public class CrashOnStationEntity {
     private UUID uid;
-    private UUID stUID;
-    private UUID crUID;
+    private UUID stUid;
+    private UUID crUid;
     private LocalDateTime dateTime;
 }

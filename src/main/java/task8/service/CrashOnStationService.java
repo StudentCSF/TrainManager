@@ -29,9 +29,9 @@ public class CrashOnStationService {
 
         CrashOnStationEntity crashOnStationEntity = new CrashOnStationEntity();
         crashOnStationEntity.setUid(UUID.randomUUID());
-        crashOnStationEntity.setCrUID(request.getCrashUid());
+        crashOnStationEntity.setCrUid(request.getCrashUid());
         crashOnStationEntity.setDateTime(request.getDateTime());
-        crashOnStationEntity.setStUID(station.getUid());
+        crashOnStationEntity.setStUid(station.getUid());
 
         crashOnStationRepository.insert(crashOnStationEntity);
     }

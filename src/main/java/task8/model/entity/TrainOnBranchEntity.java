@@ -7,9 +7,8 @@ import java.util.UUID;
 
 @Data
 public class TrainOnBranchEntity {
-    private UUID uid;
-    private UUID trUID;
-    private UUID stOnBrUID;
+    private UUID trUid;
+    private UUID stOnBrUid;
     private LocalDateTime datetime;
     private Boolean forward;
 }

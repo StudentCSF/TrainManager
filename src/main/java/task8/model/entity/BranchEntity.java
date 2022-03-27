@@ -8,5 +8,4 @@ import java.util.UUID;
 public class BranchEntity {
     private UUID uid;
     private String name;
-    //String color;
 }
