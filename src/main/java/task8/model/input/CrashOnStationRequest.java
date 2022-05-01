@@ -1,8 +1,9 @@
 package task8.model.input;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ public class CrashOnStationRequest {
     @NotNull
     private UUID crashUid;
 
-    @NotNull
+    @NotBlank
     private String stationName;
 
     @NotNull

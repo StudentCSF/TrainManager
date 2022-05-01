@@ -1,14 +1,16 @@
 package task8.component;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
+import org.springframework.stereotype.Component;
 import task8.model.input.CrashOnStationRequest;
 import task8.repository.CrashRepository;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.Set;
 
+@Component
 public class CrashOnStationValidationComponent {
 
     private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

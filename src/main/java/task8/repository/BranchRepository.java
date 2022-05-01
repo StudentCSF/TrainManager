@@ -1,9 +1,11 @@
 package task8.repository;
 
+import org.springframework.stereotype.Repository;
 import task8.model.entity.BranchEntity;
 
 import java.util.*;
 
+@Repository
 public class BranchRepository {
 
     private final Map<UUID, BranchEntity> branches = new HashMap<>();

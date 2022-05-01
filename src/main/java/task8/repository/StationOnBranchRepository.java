@@ -1,10 +1,12 @@
 package task8.repository;
 
+import org.springframework.stereotype.Repository;
 import task8.model.entity.StationOnBranchEntity;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Repository
 public class StationOnBranchRepository {
 
     private final Map<UUID, StationOnBranchEntity> stationOnBranchEntityMap = new HashMap<>();

@@ -1,9 +1,11 @@
 package task8.repository;
 
+import org.springframework.stereotype.Repository;
 import task8.model.entity.StationEntity;
 
 import java.util.*;
 
+@Repository
 public class StationRepository {
 
     private final Map<UUID, StationEntity> stations = new HashMap<>();

@@ -1,16 +1,18 @@
 package task8.model.input;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class AddStationToBranchRequest {
 
-    @NotNull
+    @NotBlank
     private String stationName;
 
-    @NotNull
+    @NotBlank
     private String branchName;
 
     @NotNull

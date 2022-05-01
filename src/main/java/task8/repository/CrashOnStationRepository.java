@@ -1,10 +1,12 @@
 package task8.repository;
 
+import org.springframework.stereotype.Repository;
 import task8.model.entity.CrashOnStationEntity;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Repository
 public class CrashOnStationRepository {
 
     private final Map<UUID, CrashOnStationEntity> crashOnStationEntityMap = new HashMap<>();

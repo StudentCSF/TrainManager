@@ -1,5 +1,7 @@
 package task8.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import task8.component.StationOnBranchValidationComponent;
 import task8.exception.BranchNotFoundException;
 import task8.exception.RequestNotValidException;
@@ -14,15 +16,27 @@ import task8.repository.StationRepository;
 
 import java.util.UUID;
 
+@Service
 public class AddStationToBranchService {
 
-    private final StationOnBranchValidationComponent stationOnBranchValidationComponent = new StationOnBranchValidationComponent();
+    private final StationOnBranchValidationComponent stationOnBranchValidationComponent;
 
-    private final StationRepository stationRepository = new StationRepository();
+    private final StationRepository stationRepository;
 
-    private final BranchRepository branchRepository = new BranchRepository();
+    private final BranchRepository branchRepository;
 
-    private final StationOnBranchRepository stationOnBranchRepository = new StationOnBranchRepository();
+    private final StationOnBranchRepository stationOnBranchRepository;
+
+    @Autowired
+    public AddStationToBranchService(StationOnBranchValidationComponent stationOnBranchValidationComponent,
+                                     StationRepository stationRepository,
+                                     BranchRepository branchRepository,
+                                     StationOnBranchRepository stationOnBranchRepository) {
+        this.stationOnBranchValidationComponent = stationOnBranchValidationComponent;
+        this.stationRepository = stationRepository;
+        this.branchRepository = branchRepository;
+        this.stationOnBranchRepository = stationOnBranchRepository;
+    }
 
     public void processRequest(AddStationToBranchRequest request) {
         if (!stationOnBranchValidationComponent.isValid(request)) {
@@ -31,14 +45,16 @@ public class AddStationToBranchService {
 
         StationEntity station = stationRepository.findByName(request.getStationName())
                 .orElseThrow(StationNotFoundException::new);
+
         BranchEntity branch = branchRepository.findByName(request.getBranchName())
                 .orElseThrow(BranchNotFoundException::new);
 
-        StationOnBranchEntity stationOnBranch = new StationOnBranchEntity();
-        stationOnBranch.setUid(UUID.randomUUID());
-        stationOnBranch.setBrUid(branch.getUid());
-        stationOnBranch.setStUid(station.getUid());
-        stationOnBranch.setPosition(request.getPosition());
+        StationOnBranchEntity stationOnBranch = StationOnBranchEntity.builder()
+                .brUid(branch.getUid())
+                .position(request.getPosition())
+                .stUid(station.getUid())
+                .uid(UUID.randomUUID())
+                .build();
 
         stationOnBranchRepository.insert(stationOnBranch);
     }

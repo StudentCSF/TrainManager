@@ -1,10 +1,12 @@
 package task8.repository;
 
+import org.springframework.stereotype.Repository;
 import task8.model.entity.TrainEntity;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Repository
 public class TrainRepository {
 
     private final Map<UUID, TrainEntity> trains = new HashMap<>();
