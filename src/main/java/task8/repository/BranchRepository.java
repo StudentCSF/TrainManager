@@ -35,6 +35,8 @@ public class BranchRepository {
     }
 
     public Optional<BranchEntity> findByName(String name) {
-        return this.branches.values().stream().filter(x -> name.equals(x.getName())).findFirst();
+        return this.branches.values().stream()
+                .filter(x -> name.equals(x.getName()))
+                .findFirst();
     }
 }

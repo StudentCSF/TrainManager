@@ -18,5 +18,5 @@ public class TrainEntity {
     //@Id
     private UUID uid;
 
-    private Boolean onRepair;
+    private Integer number;
 }

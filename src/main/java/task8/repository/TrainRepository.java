@@ -35,9 +35,9 @@ public class TrainRepository {
         return Optional.ofNullable(this.trains.get(uid));
     }
 
-    public List<TrainEntity> findAllByOnRepair(Boolean onRepair) {
+    public Optional<TrainEntity> findByNumber(Integer num) {
         return this.trains.values().stream()
-                .filter(x -> onRepair.equals(x.getOnRepair()))
-                .collect(Collectors.toList());
+                .filter(x -> num.equals(x.getNumber()))
+                .findFirst();
     }
 }

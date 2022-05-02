@@ -40,4 +40,10 @@ public class CrashRepository {
                 .filter(x -> difficulty.equals(x.getDifficulty()))
                 .collect(Collectors.toList());
     }
+
+    public Optional<CrashEntity> findByName(String name) {
+       return this.crashes.values().stream()
+                .filter(x -> x.getName().equals(name))
+                .findFirst();
+    }
 }

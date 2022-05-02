@@ -18,5 +18,7 @@ public class CrashEntity {
     //@Id
     private UUID uid;
 
+    private String name;
+
     private Integer difficulty;
 }
