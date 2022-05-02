@@ -9,7 +9,11 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
-public class AddStationToBranchRequest {
+public class InsertTrainOnBranchRequest {
+
+    @NotNull
+    @Min(0)
+    private Integer trainNum;
 
     @NotBlank
     private String stationName;
@@ -17,7 +21,5 @@ public class AddStationToBranchRequest {
     @NotBlank
     private String branchName;
 
-    @NotNull
-    @Min(0)
-    private Integer position;
+    private Boolean forward;
 }

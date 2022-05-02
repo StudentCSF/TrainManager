@@ -3,9 +3,7 @@ package task8.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task8.component.CrashOnStationValidationComponent;
-import task8.exception.CrashNotFoundException;
-import task8.exception.RequestNotValidException;
-import task8.exception.StationNotFoundException;
+import task8.exception.*;
 import task8.model.entity.CrashOnStationEntity;
 import task8.model.entity.StationEntity;
 import task8.model.input.CrashOnStationRequest;
@@ -30,16 +28,27 @@ public class CrashOnStationService {
     @Autowired
     public CrashOnStationService(CrashOnStationValidationComponent validationComponent,
                                  StationRepository stationRepository,
-                                 CrashOnStationRepository crashOnStationRepository, CrashRepository crashRepository) {
+                                 CrashOnStationRepository crashOnStationRepository,
+                                 CrashRepository crashRepository) {
         this.validationComponent = validationComponent;
         this.stationRepository = stationRepository;
         this.crashOnStationRepository = crashOnStationRepository;
         this.crashRepository = crashRepository;
     }
 
-    public void processRequest(CrashOnStationRequest request) {
+    public UUID processRequest(CrashOnStationRequest request) {
         if (!validationComponent.isValid(request)) {
             throw new RequestNotValidException();
+        }
+
+        if (crashOnStationRepository.findByStationId(
+                        this.stationRepository.findByName(
+                                        request.getStationName())
+                                .orElseThrow(StationNotFoundException::new)
+                                .getUid())
+                .isPresent()
+        ) {
+            throw new CrashOnStationAlreadyExistsException();
         }
 
         StationEntity station = stationRepository.findByName(request.getStationName())
@@ -56,18 +65,34 @@ public class CrashOnStationService {
 
         crashOnStationRepository.insert(crashOnStationEntity);
 
-        System.out.printf("Произошел %s на станции %s в %s\n",
+        String red = "\u001B[31m";
+        String blue = "\u001B[34m";
+        String green = "\u001B[32m";
+        String def = "\u001B[0m";
+        System.out.printf("Произошел %s %s %s на станции %s %s %s в %s %s %s\n",
+                red,
                 request.getCrashName(),
+                def,
+                green,
                 request.getStationName(),
-                request.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                def,
+                blue,
+                request.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                def
+        );
 
-        try {
-            Thread.sleep(this.crashRepository.findById(crashOnStationEntity.getCrUid())
-                    .orElseThrow(CrashNotFoundException::new).getDifficulty() * 100000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        this.crashOnStationRepository.delete(crashOnStationEntity.getUid());
+        return crashOnStationEntity.getUid();
+    }
 
+    public void repair(UUID uid) {
+        this.crashOnStationRepository.delete(uid);
+    }
+
+    public Integer getCrashDifficulty(UUID crashOnStationUid) {
+        return this.crashRepository.findById(this.crashOnStationRepository.findById(crashOnStationUid)
+                        .orElseThrow(CrashOnStationNotFoundException::new)
+                        .getCrUid())
+                .orElseThrow(CrashNotFoundException::new)
+                .getDifficulty();
     }
 }

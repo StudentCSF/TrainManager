@@ -14,11 +14,10 @@ import task8.repository.BranchRepository;
 import task8.repository.StationOnBranchRepository;
 import task8.repository.StationRepository;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 @Service
-public class AddStationToBranchService {
+public class StationOnBranchService {
 
     private final StationOnBranchValidationComponent stationOnBranchValidationComponent;
 
@@ -29,10 +28,10 @@ public class AddStationToBranchService {
     private final StationOnBranchRepository stationOnBranchRepository;
 
     @Autowired
-    public AddStationToBranchService(StationOnBranchValidationComponent stationOnBranchValidationComponent,
-                                     StationRepository stationRepository,
-                                     BranchRepository branchRepository,
-                                     StationOnBranchRepository stationOnBranchRepository) {
+    public StationOnBranchService(StationOnBranchValidationComponent stationOnBranchValidationComponent,
+                                  StationRepository stationRepository,
+                                  BranchRepository branchRepository,
+                                  StationOnBranchRepository stationOnBranchRepository) {
         this.stationOnBranchValidationComponent = stationOnBranchValidationComponent;
         this.stationRepository = stationRepository;
         this.branchRepository = branchRepository;
