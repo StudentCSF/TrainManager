@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,10 +14,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Entity
+@Entity
+@Table(name = "crash_on_station")
 public class CrashOnStationEntity {
 
-    //@Id
+    @Id
     private UUID uid;
 
     private UUID stUid;

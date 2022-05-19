@@ -1,5 +1,6 @@
 package task8.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task8.component.CrashRequestValidationComponent;
 import task8.exception.CrashAlreadyExistsException;
@@ -19,6 +20,7 @@ public class CrashService {
 
     private final CrashRequestValidationComponent crashRequestValidationComponent;
 
+    @Autowired
     public CrashService(CrashRepository crashRepository, CrashRequestValidationComponent crashRequestValidationComponent) {
         this.crashRepository = crashRepository;
         this.crashRequestValidationComponent = crashRequestValidationComponent;
@@ -33,7 +35,7 @@ public class CrashService {
             throw new CrashAlreadyExistsException();
         }
 
-        crashRepository.insert(CrashEntity.builder()
+        crashRepository.save(CrashEntity.builder()
                 .uid(UUID.randomUUID())
                 .name(crashRequest.getName())
                 .difficulty(crashRequest.getDifficulty())

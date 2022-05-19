@@ -1,5 +1,6 @@
 package task8.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task8.exception.RequestNotValidException;
 import task8.exception.TrainAlreadyExistsException;
@@ -15,6 +16,7 @@ public class TrainService {
 
     private final TrainRepository trainRepository;
 
+    @Autowired
     public TrainService(TrainRepository trainRepository) {
         this.trainRepository = trainRepository;
     }
@@ -27,7 +29,7 @@ public class TrainService {
             throw new TrainAlreadyExistsException();
         }
 
-        this.trainRepository.insert(TrainEntity.builder()
+        this.trainRepository.save(TrainEntity.builder()
                 .uid(UUID.randomUUID())
                 .number(num)
                 .build());

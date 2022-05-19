@@ -56,6 +56,6 @@ public class StationOnBranchService {
                 .uid(UUID.randomUUID())
                 .build();
 
-        stationOnBranchRepository.insert(stationOnBranch);
+        stationOnBranchRepository.save(stationOnBranch);
     }
 }

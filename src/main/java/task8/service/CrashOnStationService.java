@@ -41,7 +41,7 @@ public class CrashOnStationService {
             throw new RequestNotValidException();
         }
 
-        if (crashOnStationRepository.findByStationId(
+        if (crashOnStationRepository.findByStUid(
                         this.stationRepository.findByName(
                                         request.getStationName())
                                 .orElseThrow(StationNotFoundException::new)
@@ -63,7 +63,7 @@ public class CrashOnStationService {
                 .stUid(station.getUid())
                 .build();
 
-        crashOnStationRepository.insert(crashOnStationEntity);
+        crashOnStationRepository.save(crashOnStationEntity);
 
         String red = "\u001B[31m";
         String blue = "\u001B[34m";
@@ -84,8 +84,18 @@ public class CrashOnStationService {
         return crashOnStationEntity.getUid();
     }
 
-    public void repair(UUID uid) {
-        this.crashOnStationRepository.delete(uid);
+//    public void repair(UUID uid) {
+//        this.crashOnStationRepository.delete(uid);
+//    }
+
+    public void repair(String stationName) {
+        this.crashOnStationRepository.delete(
+                this.crashOnStationRepository.findByStUid(
+                                this.stationRepository.findByName(stationName)
+                                        .orElseThrow(StationNotFoundException::new).getUid()
+                        )
+                        .orElseThrow(CrashNotFoundException::new)
+        );
     }
 
     public Integer getCrashDifficulty(UUID crashOnStationUid) {

@@ -1,5 +1,6 @@
 package task8.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task8.exception.BranchAlreadyExistsException;
 import task8.exception.RequestNotValidException;
@@ -13,6 +14,7 @@ public class BranchService {
 
     private final BranchRepository branchRepository;
 
+    @Autowired
     public BranchService(BranchRepository branchRepository) {
         this.branchRepository = branchRepository;
     }
@@ -24,7 +26,7 @@ public class BranchService {
         if (this.branchRepository.findByName(branchName).isPresent()) {
             throw new BranchAlreadyExistsException();
         }
-        this.branchRepository.insert(BranchEntity.builder()
+        this.branchRepository.save(BranchEntity.builder()
                 .name(branchName)
                 .uid(UUID.randomUUID())
                 .build());

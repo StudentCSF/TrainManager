@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,10 +14,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Entity
+@Entity
+@Table(name = "train_on_branch")
 public class TrainOnBranchEntity {
 
-    //@Id
+    @Id
     private UUID trUid;
 
     private UUID stOnBrUid;

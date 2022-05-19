@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Getter
@@ -12,10 +13,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Entity
+@Entity
+@Table(name = "station_on_branch")
 public class StationOnBranchEntity {
 
-    //@Id
+    @Id
     private UUID uid;
 
     private UUID stUid;

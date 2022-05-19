@@ -1,5 +1,6 @@
 package task8.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task8.exception.RequestNotValidException;
 import task8.exception.StationAlreadyExistsException;
@@ -15,6 +16,7 @@ public class StationService {
 
     private final StationRepository stationRepository;
 
+    @Autowired
     public StationService(StationRepository stationRepository) {
         this.stationRepository = stationRepository;
     }
@@ -26,7 +28,7 @@ public class StationService {
         if (this.stationRepository.findByName(stationName).isPresent()) {
             throw new StationAlreadyExistsException();
         }
-        stationRepository.insert(StationEntity.builder()
+        stationRepository.save(StationEntity.builder()
                 .uid(UUID.randomUUID())
                 .name(stationName)
                 .build());

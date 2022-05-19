@@ -1,5 +1,6 @@
 package task8.component;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolation;
@@ -11,6 +12,7 @@ public class InsertTrainIOnBranchValidationComponent {
 
     private final Validator validator;
 
+    @Autowired
     public InsertTrainIOnBranchValidationComponent(Validator validator) {
         this.validator = validator;
     }

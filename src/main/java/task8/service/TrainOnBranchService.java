@@ -59,11 +59,11 @@ public class TrainOnBranchService {
                 .orElseThrow(BranchNotFoundException::new);
         StationEntity stationEntity = this.stationRepository.findByName(insertTrainOnBranchRequest.getStationName())
                 .orElseThrow(StationNotFoundException::new);
-        StationOnBranchEntity stationOnBranchEntity = this.stationOnBranchRepository.findByStationIdAndBranchId(
+        StationOnBranchEntity stationOnBranchEntity = this.stationOnBranchRepository.findByStUidAndBrUid(
                         stationEntity.getUid(),
                         branchEntity.getUid())
                 .orElseThrow(StationOnBranchNotFoundException::new);
-        this.trainOnBranchRepository.insert(TrainOnBranchEntity.builder()
+        this.trainOnBranchRepository.save(TrainOnBranchEntity.builder()
                 .datetime(LocalDateTime.now())
                 .forward(insertTrainOnBranchRequest.getForward() == null || insertTrainOnBranchRequest.getForward())
                 .stOnBrUid(stationOnBranchEntity.getUid())
@@ -81,7 +81,7 @@ public class TrainOnBranchService {
         TrainEntity trainEntity = this.trainRepository.findByNumber(request.getTrainNum())
                 .orElseThrow(TrainNotFoundException::new);
 
-        TrainOnBranchEntity trainOnBranchEntity = trainOnBranchRepository.findByTrainId(trainEntity.getUid())
+        TrainOnBranchEntity trainOnBranchEntity = trainOnBranchRepository.findByTrUid(trainEntity.getUid())
                 .orElseThrow(TrainOnBranchNotFoundException::new);
 
         StationOnBranchEntity prev = stationOnBranchRepository.findById(trainOnBranchEntity.getStOnBrUid())
@@ -89,24 +89,27 @@ public class TrainOnBranchService {
 
         int where = trainOnBranchEntity.getForward() ? 1 : -1;
 
-        StationOnBranchEntity curr = stationOnBranchRepository.findByBranchUidAndPosition(prev.getBrUid(), prev.getPosition() + where)
+        StationOnBranchEntity curr = stationOnBranchRepository.findByBrUidAndPosition(prev.getBrUid(), prev.getPosition() + where)
                 .orElse(null);
 
         if (curr == null) {
             where *= -1;
             trainOnBranchEntity.setForward(!trainOnBranchEntity.getForward());
-            curr = stationOnBranchRepository.findByBranchUidAndPosition(prev.getBrUid(), prev.getPosition() + where)
+            curr = stationOnBranchRepository.findByBrUidAndPosition(prev.getBrUid(), prev.getPosition() + where)
                     .orElseThrow(RuntimeException::new);
         }
 
-        TrainOnBranchEntity newTrainOnBranch = TrainOnBranchEntity.builder()
-                .datetime(request.getDateTime())
-                .forward(trainOnBranchEntity.getForward())
-                .stOnBrUid(curr.getUid())
-                .trUid(trainEntity.getUid())
-                .build();
+        TrainOnBranchEntity newTrainOnBranch = this.trainOnBranchRepository.findByTrUid(trainEntity.getUid())
+                        .orElseThrow(TrainNotFoundException::new);
 
-        trainOnBranchRepository.update(newTrainOnBranch);
+//                TrainOnBranchEntity.builder()
+                newTrainOnBranch.setDatetime(request.getDateTime());
+                newTrainOnBranch.setForward(trainOnBranchEntity.getForward());
+                newTrainOnBranch.setStOnBrUid(curr.getUid());
+//                newTrainOnBranch.set.trUid(trainEntity.getUid())
+//                .build();
+
+        trainOnBranchRepository.save(newTrainOnBranch);
 
         String green = "\u001B[32m";
         String purple = "\u001B[35m";
@@ -139,8 +142,8 @@ public class TrainOnBranchService {
         if (trainNum == null) {
             throw new RequestNotValidException();
         }
-        return this.crashOnStationRepository.findByStationId(this.stationOnBranchRepository.findById(
-                                this.trainOnBranchRepository.findByTrainId(
+        return this.crashOnStationRepository.findByStUid(this.stationOnBranchRepository.findById(
+                                this.trainOnBranchRepository.findByTrUid(
                                                 this.trainRepository.findByNumber(trainNum)
                                                         .orElseThrow(TrainNotFoundException::new)
                                                         .getUid())
